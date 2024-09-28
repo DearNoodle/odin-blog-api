@@ -1,1 +1,1 @@
-# odin-blog-api
+# node-template
