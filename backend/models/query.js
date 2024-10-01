@@ -1,8 +1,8 @@
 const { PrismaClient } = require('@prisma/client');
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
 const prisma = new PrismaClient();
 
-async function addUser(req) {
+async function createUser(req) {
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
   await prisma.user.create({
     data: {
@@ -12,6 +12,67 @@ async function addUser(req) {
   });
 }
 
+async function createPost(req) {
+  const { title, content, published } = req.body;
+  return await prisma.post.create({
+    data: { authorId: req.user.id, title, content, published },
+  });
+}
+
+async function readPost(req) {
+  return await prisma.post.findUnique({
+    where: { authorId: req.user.id, id: req.params.id },
+  });
+}
+
+async function updatePost(req) {
+  const { title, content, published } = req.body;
+  return await prisma.post.update({
+    where: { authorId: req.user.id, id: req.params.id },
+    data: { authorId: req.user.id, title, content, published },
+  });
+}
+
+async function deletePost(req) {
+  return await prisma.post.delete({
+    where: { authorId: req.user.id, id: req.params.id },
+  });
+}
+
+async function createComment(req) {
+  const { postId, content } = req.body;
+  return await prisma.comment.create({
+    data: { userId: req.user.id, postId, content },
+  });
+}
+
+async function readComment(req) {
+  return await prisma.comment.findUnique({
+    where: { userId: req.user.id, id: req.params.id },
+  });
+}
+
+async function updateComment(req) {
+  const { postId, content } = req.body;
+  return await prisma.comment.update({
+    where: { userId: req.user.id, id: req.params.id },
+    data: { userId: req.user.id, postId, content },
+  });
+}
+
+async function deleteComment(req) {
+  return await prisma.comment.delete({
+    where: { userId: req.user.id, id: req.params.id },
+  });
+}
 module.exports = {
-  addUser,
+  createUser,
+  createPost,
+  readPost,
+  updatePost,
+  deletePost,
+  createComment,
+  readComment,
+  updateComment,
+  deleteComment,
 };

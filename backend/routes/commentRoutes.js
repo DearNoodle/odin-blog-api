@@ -4,9 +4,9 @@ const { jwtAuth } = require('./middlewares/routeAuth');
 
 const router = Router();
 
-router.post('/comment', jwtAuth, controller.newComment);
-router.get('/comment', jwtAuth, controller.getComment);
-router.put('/comment', jwtAuth, controller.editComment);
-router.delete('/comment', jwtAuth, controller.deleteComment);
+router.post('/comment', jwtAuth, controller.createComment);
+router.get('/comment/:id', jwtAuth, controller.readComment);
+router.put('/comment/:id', jwtAuth, controller.updateComment);
+router.delete('/comment/:id', jwtAuth, controller.deleteComment);
 
 module.exports = router;

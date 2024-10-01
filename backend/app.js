@@ -11,6 +11,9 @@ app.use(express.urlencoded({ extended: true }));
 const passport = require('./configs/passportConfig');
 app.use(passport.initialize());
 
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
 app.use('/api', authRouter);
 app.use('/api', postRouter);
 app.use('/api', commentRouter);

@@ -13,7 +13,21 @@ const localStrategyOptions = {
 };
 
 const jwtStrategyOptions = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // Extract JWT from Authorization header
+  jwtFromRequest: ExtractJwt.fromExtractors([
+    ExtractJwt.fromAuthHeaderAsBearerToken(),
+    ExtractJwt.fromBodyField('token'),
+    ExtractJwt.fromUrlQueryParameter('token'),
+    ExtractJwt.fromHeader('Authorization'),
+    ExtractJwt.fromExtractors([
+      (req) => {
+        var token = null;
+        if (req && req.cookies) {
+          token = req.cookies['accessToken'];
+        }
+        return token;
+      },
+    ]),
+  ]),
   secretOrKey: process.env.JWT_SECRET || 'your_secret_key',
 };
 

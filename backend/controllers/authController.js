@@ -12,20 +12,31 @@ async function registerUser(req, res) {
     });
   }
   try {
-    await query.addUser(req);
-    res.redirect('/login');
+    await query.createUser(req);
+    res.send('Register Success');
   } catch (err) {
     console.error(err);
     res.status(500).send('Failed to Register User');
   }
 }
 
-async function jwtLogin(req, res) {
-  const token = jwt.sign({ userId: req.user.id }, jwtSecret, { expiresIn: '5m' });
-  res.json({ token });
+async function generateJWT(req, res) {
+  const token = jwt.sign({ userId: req.user.id }, jwtSecret, { expiresIn: '30m' });
+  res.cookie('accessToken', token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 30 * 60 * 1000,
+  });
+
+  res.json({ message: 'Login successful' });
+}
+
+async function getUserId(req, res) {
+  res.json({ userId: req.user.id });
 }
 
 module.exports = {
   registerUser,
-  jwtLogin,
+  generateJWT,
+  getUserId,
 };
