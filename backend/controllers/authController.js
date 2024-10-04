@@ -13,7 +13,7 @@ async function registerUser(req, res) {
   }
   try {
     await query.createUser(req);
-    res.send('Register Success');
+    res.status(201).send('Register Success');
   } catch (err) {
     console.error(err);
     res.status(500).send('Failed to Register User');
@@ -25,18 +25,27 @@ async function generateJWT(req, res) {
   res.cookie('accessToken', token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    maxAge: 30 * 60 * 1000,
+    maxAge: 60 * 60 * 1000,
   });
-
-  res.json({ message: 'Login successful' });
+  res.status(200).send('Login successful');
 }
 
 async function getUserId(req, res) {
-  res.json({ userId: req.user.id });
+  res.status(200).send({ userId: req.user.id });
+}
+
+async function logoutUser(req, res) {
+  res.cookie('accessToken', '', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    expires: new Date(0), // Invalidates the cookie immediately
+  });
+  res.status(200).send('Logout successful');
 }
 
 module.exports = {
   registerUser,
   generateJWT,
   getUserId,
+  logoutUser,
 };

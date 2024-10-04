@@ -9,4 +9,6 @@ router.get('/post/:id', jwtAuth, controller.readPost);
 router.put('/post/:id', jwtAuth, controller.updatePost);
 router.delete('/post/:id', jwtAuth, controller.deletePost);
 
+router.get('/posts', jwtAuth, controller.readAllPosts);
+
 module.exports = router;

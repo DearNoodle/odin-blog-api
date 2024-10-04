@@ -39,6 +39,10 @@ async function deletePost(req) {
   });
 }
 
+async function readAllPosts() {
+  return await prisma.post.findMany();
+}
+
 async function createComment(req) {
   const { postId, content } = req.body;
   return await prisma.comment.create({
@@ -65,14 +69,22 @@ async function deleteComment(req) {
     where: { userId: req.user.id, id: req.params.id },
   });
 }
+
+async function readAllPostComments(req) {
+  return await prisma.comment.findMany({
+    where: { postId: req.params.postId },
+  });
+}
 module.exports = {
   createUser,
   createPost,
   readPost,
   updatePost,
   deletePost,
+  readAllPosts,
   createComment,
   readComment,
   updateComment,
   deleteComment,
+  readAllPostComments,
 };

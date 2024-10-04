@@ -15,10 +15,15 @@ async function deleteComment(req, res) {
   await query.deleteComment(req);
   res.send('deleted');
 }
+async function readAllPostComments(req, res) {
+  const comments = await query.readAllPostComments(req);
+  res.json(comments);
+}
 
 module.exports = {
   createComment,
   readComment,
   updateComment,
   deleteComment,
+  readAllPostComments,
 };

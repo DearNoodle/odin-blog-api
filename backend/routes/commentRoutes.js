@@ -9,4 +9,5 @@ router.get('/comment/:id', jwtAuth, controller.readComment);
 router.put('/comment/:id', jwtAuth, controller.updateComment);
 router.delete('/comment/:id', jwtAuth, controller.deleteComment);
 
+router.get('/post/:postId/comments', jwtAuth, controller.readAllPostComments);
 module.exports = router;
