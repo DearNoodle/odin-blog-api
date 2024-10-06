@@ -5,29 +5,19 @@ import axios from "axios";
 
 function PostList() {
   const navigate = useNavigate();
-  const userId = useContext(UserIdContext);
-  const [posts, setPosts] = useState([
-    {
-      id: 123,
-      title: "test post",
-      content: "some content",
-      published: true,
-      authorId: 112233,
-    },
-  ]);
+  const { userId } = useContext(UserIdContext);
+  const [posts, setPosts] = useState([]);
 
-  const fetchPosts = async () => {
+  async function fetchPosts() {
     try {
       const response = await axios.get(`${apiUrl}/posts`, {
         withCredentials: true,
       });
-      if (response.data.length) {
-        setPosts(response.data);
-      }
+      setPosts(response.data);
     } catch (error) {
       console.error("Error fetching posts:", error);
     }
-  };
+  }
 
   useEffect(() => {
     if (!userId) {
@@ -35,19 +25,35 @@ function PostList() {
       return;
     }
     fetchPosts();
-  }, []);
+  }, [userId]);
 
   return (
-    <div>
-      <h1>List of Posts</h1>
-      <ul>
-        {posts.map((post) => (
-          <li key={post.id}>
-            <h2>{post.title}</h2>
-            <Link to={`/post/${post.id}`}>Read More</Link>
-          </li>
-        ))}
-      </ul>
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-6 text-center">Latest Posts</h1>
+      {posts.length > 0 ? (
+        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {posts.map((post) => (
+            <li
+              key={post.id}
+              className="bg-white rounded-lg shadow-md overflow-hidden"
+            >
+              <Link to={`/post/${post.id}`} className="block">
+                <div className="p-4">
+                  <h2 className="text-xl font-semibold mb-2">{post.title}</h2>
+                  <p className="text-gray-600 text-sm">
+                    by{" "}
+                    <span className="font-medium">{post.author.username}</span>
+                  </p>
+                </div>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="text-center text-gray-500">
+          No posts available yet. Stay tuned!
+        </p>
+      )}
     </div>
   );
 }

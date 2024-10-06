@@ -22,7 +22,7 @@ function App() {
       setUserId(response.data.userId);
       console.log(response.data.userId);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     } finally {
       setIsLoading(false);
     }
@@ -37,7 +37,7 @@ function App() {
   }
 
   return (
-    <UserIdContext.Provider value={userId}>
+    <UserIdContext.Provider value={{ userId, setUserId }}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainPage />} />

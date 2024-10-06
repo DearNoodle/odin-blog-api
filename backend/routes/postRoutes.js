@@ -10,5 +10,6 @@ router.put('/post/:id', jwtAuth, controller.updatePost);
 router.delete('/post/:id', jwtAuth, controller.deletePost);
 
 router.get('/posts', jwtAuth, controller.readAllPosts);
+router.get('/user/posts', jwtAuth, controller.readPostsByUserId);
 
 module.exports = router;

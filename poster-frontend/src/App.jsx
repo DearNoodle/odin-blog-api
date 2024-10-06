@@ -1,35 +1,57 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { createContext, useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import MainPage from "./pages/MainPage";
+import EditPostPage from "./pages/EditPostPage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import UserPage from "./pages/UserPage";
+import axios from "axios";
+
+export const apiUrl = "http://localhost:3000/api";
+export const UserIdContext = createContext(null);
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [userId, setUserId] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+
+  async function fetchUserId() {
+    try {
+      const response = await axios.get(`${apiUrl}/user`, {
+        withCredentials: true,
+      });
+      setUserId(response.data.userId);
+      console.log(response.data.userId);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    fetchUserId();
+  }, []);
+
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <UserIdContext.Provider value={{ userId, setUserId }}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/user" element={<UserPage />} />
+          <Route
+            path="/login"
+            element={<LoginPage fetchUserId={fetchUserId} />}
+          />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/edit-post/:postId" element={<EditPostPage />} />
+        </Routes>
+      </BrowserRouter>
+    </UserIdContext.Provider>
+  );
 }
 
-export default App
+export default App;

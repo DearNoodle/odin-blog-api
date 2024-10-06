@@ -3,31 +3,29 @@ import { Link, useNavigate } from "react-router-dom";
 import { apiUrl, UserIdContext } from "../App";
 import axios from "axios";
 
-function LoginPage({ fetchUserId }) {
+function RegisterPage() {
   const navigate = useNavigate();
   const { userId } = useContext(UserIdContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  async function handleLogin(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
+    setError(null);
 
     try {
       await axios.post(
-        `${apiUrl}/login`,
+        `${apiUrl}/register`,
         {
           username,
           password,
         },
-        {
-          withCredentials: true,
-        }
+        { withCredentials: true }
       );
-      await fetchUserId();
-      navigate("/user");
-      console.log("Login successful");
+      navigate("/");
+      console.log("Register successful");
     } catch (error) {
-      console.error("Login failed:", error);
+      console.error("Register failed:", error);
     }
   }
 
@@ -43,9 +41,9 @@ function LoginPage({ fetchUserId }) {
       <div className="flex flex-col items-center justify-center h-screen">
         <div className="bg-white rounded-lg shadow-md p-6 max-w-md w-full">
           <h1 className="text-3xl font-bold mb-6 text-center">
-            Login to your account
+            Create a new account
           </h1>
-          <form onSubmit={handleLogin}>
+          <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label
                 htmlFor="username"
@@ -84,15 +82,15 @@ function LoginPage({ fetchUserId }) {
               type="submit"
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             >
-              Login
+              Sign up
             </button>
             <p className="text-gray-700 text-sm mt-4">
-              Don’t have an account yet?{" "}
+              Already have an account?{" "}
               <Link
-                to="/register"
+                to="/login"
                 className="font-medium text-blue-500 hover:text-blue-700"
               >
-                Sign up
+                Login
               </Link>
             </p>
           </form>
@@ -102,4 +100,4 @@ function LoginPage({ fetchUserId }) {
   );
 }
 
-export default LoginPage;
+export default RegisterPage;

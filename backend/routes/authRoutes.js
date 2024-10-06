@@ -7,7 +7,7 @@ const router = Router();
 
 router.get('/user', jwtAuth, controller.getUserId);
 router.post('/register', validateRegister, controller.registerUser);
-router.post('/login', loginAuth, controller.generateJWT);
-router.post('/logout', loginAuth, controller.logoutUser);
+router.post('/login', loginAuth, controller.loginUser);
+router.post('/logout', jwtAuth, controller.logoutUser);
 
 module.exports = router;

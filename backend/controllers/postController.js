@@ -19,10 +19,15 @@ async function readAllPosts(req, res) {
   const posts = await query.readAllPosts();
   res.json(posts);
 }
+async function readPostsByUserId(req, res) {
+  const posts = await query.readPostsByUserId(req);
+  res.json(posts);
+}
 module.exports = {
   createPost,
   readPost,
   updatePost,
   deletePost,
   readAllPosts,
+  readPostsByUserId,
 };

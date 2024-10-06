@@ -20,7 +20,7 @@ async function registerUser(req, res) {
   }
 }
 
-async function generateJWT(req, res) {
+async function loginUser(req, res) {
   const token = jwt.sign({ userId: req.user.id }, jwtSecret, { expiresIn: '30m' });
   res.cookie('accessToken', token, {
     httpOnly: true,
@@ -30,22 +30,22 @@ async function generateJWT(req, res) {
   res.status(200).send('Login successful');
 }
 
-async function getUserId(req, res) {
-  res.status(200).send({ userId: req.user.id });
-}
-
 async function logoutUser(req, res) {
   res.cookie('accessToken', '', {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    expires: new Date(0), // Invalidates the cookie immediately
+    expires: new Date(0),
   });
   res.status(200).send('Logout successful');
 }
 
+async function getUserId(req, res) {
+  res.status(200).send({ userId: req.user.id });
+}
+
 module.exports = {
   registerUser,
-  generateJWT,
-  getUserId,
+  loginUser,
   logoutUser,
+  getUserId,
 };

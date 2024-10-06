@@ -21,7 +21,14 @@ async function createPost(req) {
 
 async function readPost(req) {
   return await prisma.post.findUnique({
-    where: { authorId: req.user.id, id: req.params.id },
+    where: { id: req.params.id },
+    include: {
+      author: {
+        select: {
+          username: true,
+        },
+      },
+    },
   });
 }
 
@@ -40,7 +47,22 @@ async function deletePost(req) {
 }
 
 async function readAllPosts() {
-  return await prisma.post.findMany();
+  return await prisma.post.findMany({
+    where: { published: true },
+    include: {
+      author: {
+        select: {
+          username: true,
+        },
+      },
+    },
+  });
+}
+
+async function readPostsByUserId(req) {
+  return await prisma.post.findMany({
+    where: { authorId: req.user.id },
+  });
 }
 
 async function createComment(req) {
@@ -72,7 +94,14 @@ async function deleteComment(req) {
 
 async function readAllPostComments(req) {
   return await prisma.comment.findMany({
-    where: { postId: req.params.postId },
+    where: { postId: req.params.id },
+    include: {
+      user: {
+        select: {
+          username: true,
+        },
+      },
+    },
   });
 }
 module.exports = {
@@ -82,6 +111,7 @@ module.exports = {
   updatePost,
   deletePost,
   readAllPosts,
+  readPostsByUserId,
   createComment,
   readComment,
   updateComment,
