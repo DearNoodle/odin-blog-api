@@ -8,10 +8,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: [
-      'https://incredible-sundae-f3517b.netlify.app/',
-      'https://sparkly-twilight-9574c8.netlify.app/',
-    ],
+    origin: ['https://incredible-sundae-f3517b.netlify.app', 'https://sparkly-twilight-9574c8.netlify.app'],
     credentials: true,
   }),
 );
