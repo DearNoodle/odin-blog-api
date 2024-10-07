@@ -7,7 +7,7 @@ import RegisterPage from "./pages/RegisterPage";
 import UserPage from "./pages/UserPage";
 import axios from "axios";
 
-export const apiUrl = "https://odin-blog-api-production-225a.up.railway.app/";
+export const apiUrl = "https://odin-blog-api-production-225a.up.railway.app";
 export const UserIdContext = createContext(null);
 
 function App() {
