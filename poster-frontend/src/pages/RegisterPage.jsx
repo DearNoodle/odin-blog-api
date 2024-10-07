@@ -11,7 +11,6 @@ function RegisterPage() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    setError(null);
 
     try {
       await axios.post(
