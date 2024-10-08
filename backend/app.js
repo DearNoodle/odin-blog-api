@@ -9,9 +9,9 @@ const app = express();
 app.use(
   cors({
     origin: [
-      'https://incredible-sundae-f3517b.netlify.app/',
-      'https://sparkly-twilight-9574c8.netlify.app/',
-      'http://localhost:5173/',
+      'https://incredible-sundae-f3517b.netlify.app',
+      'https://sparkly-twilight-9574c8.netlify.app',
+      'http://localhost:5173',
     ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
