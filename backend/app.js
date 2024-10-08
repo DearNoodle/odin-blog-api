@@ -13,8 +13,8 @@ app.use(
       'https://sparkly-twilight-9574c8.netlify.app',
     ],
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Access-Control-Allow-Origin', 'Content-Type', 'Authorization'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
   }),
 );
 
