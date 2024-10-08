@@ -11,6 +11,7 @@ app.use(
     origin: [
       'https://incredible-sundae-f3517b.netlify.app',
       'https://sparkly-twilight-9574c8.netlify.app',
+      'http://localhost:5173', // for testing
     ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
@@ -32,7 +33,7 @@ app.use('/api', postRouter);
 app.use('/api', commentRouter);
 
 const PORT = process.env.PORT || 3000;
-// '0.0.0.0' host required for railway deploy
+// '0.0.0.0' host % POST=8080 required for railway deploy
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Listening on port ${PORT}!`);
 });
