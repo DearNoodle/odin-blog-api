@@ -9,6 +9,7 @@ import axios from "axios";
 
 export const apiUrl =
   "https://odin-blog-api-production-225a.up.railway.app/api";
+// export const apiUrl = "http://localhost:8080/api";
 export const UserIdContext = createContext(null);
 
 function App() {

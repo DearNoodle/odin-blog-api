@@ -26,6 +26,7 @@ async function loginUser(req, res) {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     maxAge: 60 * 60 * 1000,
+    sameSite: 'lax',
   });
   res.status(200).send('Login successful');
 }
@@ -35,6 +36,7 @@ async function logoutUser(req, res) {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     expires: new Date(0),
+    sameSite: 'lax',
   });
   res.status(200).send('Logout successful');
 }
