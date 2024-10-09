@@ -1,5 +1,10 @@
 # Blog API
 
+## Website Links
+
+- [**Reader Frontend**](https://sparkly-twilight-9574c8.netlify.app)
+- [**Poster Frontend**](https://incredible-sundae-f3517b.netlify.app)
+
 ## Key Features
 
 - **Separated Applications**
