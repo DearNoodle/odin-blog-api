@@ -39,6 +39,7 @@ function PostList() {
           withCredentials: true,
         }
       );
+      setIsWritingPost(false);
       setPosts(response.data);
     } catch (error) {
       console.error("Error fetching posts:", error);
