@@ -24,7 +24,9 @@ function PostList() {
     }
   }
 
-  async function createPost() {
+  async function createPost(event) {
+    event.preventDefault();
+
     try {
       const response = await axios.post(
         `${apiUrl}/post`,
