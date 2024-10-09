@@ -37,7 +37,7 @@ function PostPage() {
       console.error("Error fetching comments:", error);
     }
   }
-  // CreateNewComment testing incomplete without making post data
+
   async function CreateNewComment(event) {
     event.preventDefault();
 

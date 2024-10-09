@@ -24,7 +24,7 @@ function PostList() {
     }
   }
 
-  async function createPost(event) {
+  async function createPost(eve) {
     event.preventDefault();
 
     try {
@@ -39,7 +39,6 @@ function PostList() {
           withCredentials: true,
         }
       );
-
       setPosts(response.data);
     } catch (error) {
       console.error("Error fetching posts:", error);
@@ -63,7 +62,7 @@ function PostList() {
       return;
     }
     fetchPosts();
-  }, [userId]);
+  }, [userId, posts]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
